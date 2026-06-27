@@ -1,5 +1,5 @@
 name: Build APK
-on: [push, workflow_dispatch] # Сборка запускается при каждом сохранении кода или вручную
+on: [push, workflow_dispatch]
 
 jobs:
   build:
@@ -7,8 +7,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 31
+          build-tools-version: 31.0.0
+
       - name: Get Buildozer Action
         uses: digreatbrian/buildozer-action@v2
         with:
-          buildozer_version: stable
           buildozer-cmd: buildozer -v android debug
